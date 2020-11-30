@@ -48,5 +48,5 @@ La prueba consiste en culminar diversas características de un sistema de compra
 - [ ] GET /products/:id
 - [ ] POST /products/:id/buy (Vender un producto a partir del usuario autenticado )
     - Recibir en el body de la petición el campo quantity
-    - Crear restricción que no permita crear una transacción si la cantidad productos a comprar supera el número de productos en stock
+    - Crear restricción que no permita crear una transacción si la cantidad productos a comprar supera el número de productos en stock 
 
