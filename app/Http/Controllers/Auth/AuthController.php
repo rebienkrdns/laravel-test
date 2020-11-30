@@ -46,7 +46,7 @@ class AuthController extends Controller
         $token = $tokenResult->token;
 
         if ($request->has('remember_me') && $request->remember_me) {
-            $token->expires_at = Carbon::not()->addWeeks(1);
+            $token->expires_at = Carbon::now()->addWeeks(1);
         }
 
         return $this->showOne([
@@ -64,7 +64,7 @@ class AuthController extends Controller
         $request->user()->token()->revoke();
 
         return $this->showOne([
-            'message' => 'Cierre de sesión exisoto'
+            'message' => 'Cierre de sesión exitoso'
         ]);
     }
 }

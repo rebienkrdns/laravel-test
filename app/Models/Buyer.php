@@ -7,25 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buyer extends User
 {
-    use HasFactory;
+  use HasFactory;
 
-    /**
-     * Boot method
-     */
-    protected static function boot()
-    {
-        parent::boot();
+  protected $table = 'users';
 
-        static::addGlobalScope('buyer', function ($query) {
-            return $query->has('transactions');
-        });
-    }
+  /**
+   * Boot method
+   */
+  protected static function boot()
+  {
+    parent::boot();
 
-    /**
-     * Transactions of the user
-     */
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class);
-    }
+    static::addGlobalScope('buyer', function ($query) {
+      return $query->has('transactions');
+    });
+  }
+
+  /**
+   * Transactions of the user
+   */
+  public function transactions()
+  {
+    return $this->hasMany(Transaction::class, 'user_id', 'id');
+  }
 }

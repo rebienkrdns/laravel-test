@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\apis\BuyersController;
+use App\Http\Controllers\apis\SellersController;
+use App\Http\Controllers\apis\ProductsController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +18,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'auth'], function () {
-    Route::post('signup', [AuthController::class, 'signUp']);
-    Route::post('login', [AuthController::class, 'login'])->name('login');
+  Route::post('signup', [AuthController::class, 'signUp']);
+  Route::post('login', [AuthController::class, 'login'])->name('login');
 
-    Route::get('logout', [AuthController::class, 'logout'])
-        ->middleware('auth:api');
+  Route::get('logout', [AuthController::class, 'logout'])
+    ->middleware('auth:api');
+});
+
+Route::group(['middleware' => 'auth:api'], function () {
+  Route::get('buyers', [BuyersController::class, 'list']);
+  Route::get('buyers/{id}', [BuyersController::class, 'listOneBuyer']);
+
+  Route::get('sellers', [SellersController::class, 'list']);
+  Route::get('sellers/{id}', [SellersController::class, 'listOneSeller']);
+  Route::post('sellers/product', [SellersController::class, 'storeProduct']);
+
+  Route::get('products', [ProductsController::class, 'list']);
+  Route::post('products/{id}/buy', [ProductsController::class, 'buy']);
 });

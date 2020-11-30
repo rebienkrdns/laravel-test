@@ -6,25 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Seller extends User
 {
-    use HasFactory;
+  use HasFactory;
 
-    /**
-     * Boot method
-     */
-    protected static function boot()
-    {
-        parent::boot();
+  protected $table = 'users';
 
-        static::addGlobalScope('seller', function ($query) {
-            return $query->has('products');
-        });
-    }
+  /**
+   * Boot method
+   */
+  protected static function boot()
+  {
+    parent::boot();
 
-    /**
-     * Products that user sells
-     */
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
+    static::addGlobalScope('seller', function ($query) {
+      return $query->has('products');
+    });
+  }
+
+  /**
+   * Products that user sells
+   */
+  public function products()
+  {
+    return $this->hasMany(Product::class, 'user_id', 'id');
+  }
 }
